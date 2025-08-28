@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules/
+dist/
+
+# Apps Script builds (optional)
+apps-script/*.gs
+apps-script/*.html
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
