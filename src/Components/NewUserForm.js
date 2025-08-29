@@ -1,12 +1,14 @@
 // src/components/NewUserForm.js
 import React, { useState } from "react";
 import { Form } from "react-bootstrap";
-import { Button } from "../UI"; // <-- import your reusable Button component
+import { submitUserForm } from "../ApiCalls";
+import { Button, FormInput } from "../UI"; // use your reusable components
 
 export default function NewUserForm({ onSubmit }) {
     const [formData, setFormData] = useState({
         username: "",
         email: "",
+        password: "",
         category: ""
     });
 
@@ -19,35 +21,50 @@ export default function NewUserForm({ onSubmit }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (onSubmit) onSubmit(formData);
-        console.log("Form submitted:", formData);
+        submitUserForm(
+            formData,
+            (response) => {
+                console.log("Success:", response);
+                alert("Form submitted!");
+            },
+            (error) => {
+                console.error("Error:", error);
+                alert("Something went wrong.");
+            }
+        );
     };
 
     return (
         <Form onSubmit={handleSubmit}>
             {/* Username */}
-            <Form.Group className="mb-3" controlId="username">
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="Enter username"
-                    name="username"
-                    value={formData.username}
-                    onChange={handleChange}
-                />
-            </Form.Group>
+            <FormInput
+                label="Username"
+                type="text"
+                placeholder="Enter username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+            />
 
             {/* Email */}
-            <Form.Group className="mb-3" controlId="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control
-                    type="email"
-                    placeholder="Enter email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-            </Form.Group>
+            <FormInput
+                label="Email"
+                type="email"
+                placeholder="Enter email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+            />
+
+            {/* Password */}
+            <FormInput
+                label="Password"
+                type="password"
+                placeholder="Enter password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+            />
 
             {/* Category Dropdown */}
             <Form.Group className="mb-3" controlId="category">
