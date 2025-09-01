@@ -2,9 +2,6 @@
 node_modules/
 dist/
 
-# Apps Script builds (optional)
-apps-script/*.gs
-apps-script/*.html
 
 # VS Code
 .vscode/
