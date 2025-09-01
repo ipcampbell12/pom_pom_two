@@ -11,3 +11,5 @@ apps-script/*.html
 
 # OS files
 .DS_Store
+
+.parcel-cache/
