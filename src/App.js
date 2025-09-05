@@ -1,5 +1,9 @@
-export function App() {
-    return <h1>Hello world!</h1>;
-}
+import React from "react";
+import NewUserForm from "./Components/NewUserForm";
 
-export default App;
+export default function App() {
+    return (
+        <NewUserForm />
+
+    );
+}

@@ -1,8 +1,9 @@
 function doGet() {
-    return HtmlService
-        .createHtmlOutputFromFile("index")
-        .addMetaTag("viewport", "width=device-width,initial-scale=1.0");
+    return HtmlService.createTemplateFromFile("index")
+        .evaluate()
+        .addMetaTag("viewport", "width=device-width, initial-scale=1.0");
 }
+
 function checkThestuff() {
     Logger.log("The function is running");
     return "The function is running";

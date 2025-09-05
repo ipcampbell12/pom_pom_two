@@ -9,7 +9,7 @@
     "gpull": "clasp pull",
     "gclone": "clasp clone '119B5wtcfhBtAd9xKKDd1BVa9BjemVkd9Aw3ElULl5LgqyerJdAnppp4A' --rootDir ./apps-script",
     "gwatch": "clasp push --watch",
-    "build": "parcel build src/index.html --no-content-hash --public-url ./ --no-source-maps --dist-dir ./apps-script"
+    "build": "parcel build src/index.html --dist-dir ./apps-script --no-content-hash --public-url ./ --no-source-maps"
   },
   "author": "",
   "license": "ISC",

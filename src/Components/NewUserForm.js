@@ -1,102 +1,92 @@
-// src/components/NewUserForm.js
 import React, { useState } from "react";
+import FormInput from "../UI/FormInput";
+import Button from "../UI/Button";
 import { Form } from "react-bootstrap";
-import { submitUserForm } from "../ApiCalls";
-import { Button, FormInput, AutoDismissAlert } from "../UI"; // include AutoDismissAlert
 
-export default function NewUserForm({ onSubmit }) {
-    const [formData, setFormData] = useState({
+export default function FormExample() {
+    const [form, setForm] = useState({
+        dob: "",
         username: "",
         email: "",
-        password: "",
-        category: ""
+        gender: "",
     });
 
-    const [alert, setAlert] = useState(null); // { variant: "success" | "danger", message: "" }
-
-    const categories = ["Admin", "User", "Host"];
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }));
+        setForm((prev) => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        submitUserForm(
-            formData,
-            (response) => {
-                console.log("Success:", response);
-                setAlert({ variant: "success", message: "Form submitted successfully!" });
 
-                // Optional: reset form
-                setFormData({
-                    username: "",
-                    email: "",
-                    password: "",
-                    category: ""
-                });
-            },
-            (error) => {
-                console.error("Error:", error);
-                setAlert({ variant: "danger", message: "Something went wrong." });
-            }
-        );
+        // Simple validation
+        const newErrors = {};
+        if (!form.dob) newErrors.dob = "Date of birth is required";
+        if (!form.username) newErrors.username = "Username is required";
+        if (!form.email) newErrors.email = "Email is required";
+        if (!form.gender) newErrors.gender = "Gender is required";
+
+        setErrors(newErrors);
+
+        if (Object.keys(newErrors).length === 0) {
+            setIsSubmitting(true);
+            console.log("Form submitted:", form);
+            // TODO: call server-side Google Apps Script function if needed
+            setTimeout(() => setIsSubmitting(false), 1000);
+        }
     };
 
     return (
-        <>
-            {/* Render alert if present */}
-            {alert && <AutoDismissAlert variant={alert.variant} message={alert.message} />}
+        <Form onSubmit={handleSubmit}>
+            <FormInput
+                label="Date of Birth"
+                type="date"
+                name="dob"
+                value={form.dob}
+                onChange={handleChange}
+                error={errors.dob}
+            />
 
-            <Form onSubmit={handleSubmit}>
-                <FormInput
-                    label="Username"
-                    type="text"
-                    placeholder="Enter username"
-                    name="username"
-                    value={formData.username}
+            <FormInput
+                label="Username"
+                name="username"
+                value={form.username}
+                onChange={handleChange}
+                placeholder="Enter your username"
+                error={errors.username}
+            />
+
+            <FormInput
+                label="Email"
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                error={errors.email}
+            />
+
+            <Form.Group className="mb-3" controlId="gender">
+                <Form.Label>Gender</Form.Label>
+                <Form.Select
+                    name="gender"
+                    value={form.gender}
                     onChange={handleChange}
-                />
+                    isInvalid={!!errors.gender}
+                >
+                    <option value="">Select gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </Form.Select>
+                {errors.gender && <Form.Control.Feedback type="invalid">{errors.gender}</Form.Control.Feedback>}
+            </Form.Group>
 
-                <FormInput
-                    label="Email"
-                    type="email"
-                    placeholder="Enter email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                />
-
-                <FormInput
-                    label="Password"
-                    type="password"
-                    placeholder="Enter password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                />
-
-                <Form.Group className="mb-3" controlId="category">
-                    <Form.Label>Category</Form.Label>
-                    <Form.Select
-                        name="category"
-                        value={formData.category}
-                        onChange={handleChange}
-                    >
-                        <option value="">Select category</option>
-                        {categories.map((cat) => (
-                            <option key={cat} value={cat}>
-                                {cat}
-                            </option>
-                        ))}
-                    </Form.Select>
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
-            </Form>
-        </>
+            <Button type="submit" isLoading={isSubmitting}>
+                Submit
+            </Button>
+        </Form>
     );
 }
