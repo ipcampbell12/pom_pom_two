@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import FormInput from "../UI/FormInput";
 import Button from "../UI/Button";
 import { Form } from "react-bootstrap";
+import Heading from "../UI/Heading";
 
+// <Heading level="1" children="My Cool Form" />
 export default function FormExample() {
     const [form, setForm] = useState({
         dob: "",
@@ -40,7 +42,9 @@ export default function FormExample() {
     };
 
     return (
+
         <Form onSubmit={handleSubmit}>
+            <Heading level="1" children="My Cool Form" />
             <FormInput
                 label="Date of Birth"
                 type="date"
