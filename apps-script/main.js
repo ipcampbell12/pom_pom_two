@@ -1,7 +1,13 @@
-function doGet() {
+// function doGet() {
+//     const t = HtmlService.createTemplateFromFile("index");
+//     return t
+//         .evaluate()
+//         .addMetaTag("viewport", "width=device-width, initial-scale=1");
+// }
+
+function doGet(e) {
     const t = HtmlService.createTemplateFromFile("index");
-    return t
-        .evaluate()
+    return t.evaluate()
         .addMetaTag("viewport", "width=device-width, initial-scale=1");
 }
 
