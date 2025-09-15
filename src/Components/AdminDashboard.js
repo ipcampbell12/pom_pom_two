@@ -9,10 +9,19 @@ export default function AdminDashboard() {
     const [loading, setLoading] = useState(true);
     const [alertConfig, setAlertConfig] = useState(null);
 
+    // Define the header indexes for readability
+    const USERNAME = 0;
+    const EMAIL = 1;
+    const DOB = 2;
+    const GENDER = 3;
+    const USERTYPE = 4;
+    const TIMESTAMP = 5;
+
     useEffect(() => {
         google.script.run
             .withSuccessHandler((data) => {
-                setUsers(data);
+                console.log("Data from GAS:", data);
+                setUsers(JSON.parse(data) || []);
                 setLoading(false);
                 setAlertConfig(onSuccess("Loaded users successfully!", () => setAlertConfig(null)));
             })
@@ -34,14 +43,14 @@ export default function AdminDashboard() {
             {users.map((user, index) => (
                 <Card
                     key={index}
-                    title={user.Username || "Unnamed User"}
+                    title={user[USERNAME] || "Unnamed User"}
                     body={
                         <div>
-                            <p><strong>Email:</strong> {user.Email}</p>
-                            <p><strong>DOB:</strong> {user.DOB}</p>
-                            <p><strong>Gender:</strong> {user.Gender}</p>
-                            <p><strong>User Type:</strong> {user.UserType}</p>
-                            <p><strong>Timestamp:</strong> {user.Timestamp}</p>
+                            <p><strong>Email:</strong> {user[EMAIL]}</p>
+                            <p><strong>DOB:</strong> {user[DOB]}</p>
+                            <p><strong>Gender:</strong> {user[GENDER]}</p>
+                            <p><strong>User Type:</strong> {user[USERTYPE]}</p>
+                            <p><strong>Timestamp:</strong> {user[TIMESTAMP]}</p>
                         </div>
                     }
                     actions={[

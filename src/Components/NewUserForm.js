@@ -10,15 +10,18 @@ import { onFailure, onSuccess } from "../Utilities/AlertHelpers";
 // <Heading level="1" children="My Cool Form" />
 export default function FormExample() {
     const [form, setForm] = useState({
-        dob: "",
+        age: "",
         username: "",
         email: "",
         gender: "",
-        userType: ""
+        userType: "",
+        zipcode: ""
     });
 
     const [errors, setErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [alert, setAlert] = useState(null);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -27,11 +30,12 @@ export default function FormExample() {
 
     const fillTestData = () => {
         setForm({
-            dob: "1999-12-31",
+            age: "18-24",
             username: "Crazy_Unicorn_9000_!!!",
             email: "ridiculous.email+testing@example.com",
             gender: "female",
-            userType: "Host"
+            userType: "Host",
+            zipcode: "97219"
         });
     };
 
@@ -40,31 +44,36 @@ export default function FormExample() {
 
         // Simple validation
         const newErrors = {};
-        if (!form.dob) newErrors.dob = "Date of birth is required";
+        if (!form.age) newErrors.age = "Age Range is required";
         if (!form.username) newErrors.username = "Username is required";
         if (!form.email) newErrors.email = "Email is required";
         if (!form.gender) newErrors.gender = "Gender is required";
         if (!form.userType) newErrors.userType = "User type is required";
+        if (!form.zipcode) newErrors.zipcode = "Zipcode is required";
 
         setErrors(newErrors);
 
-        const successHandler = () => {
-            setForm({ dob: "", username: "", email: "", gender: "", userType: "" }); // <-- reset form
-            onSuccess("Form submitted successfully!", () => setIsSubmitting(false))();
-        };
-
-
         if (Object.keys(newErrors).length === 0) {
             setIsSubmitting(true);
-            submitUserForm(
-                form,
-                successHandler,
-                onFailure("Failed to submit form.", () => setIsSubmitting(false)));
-            console.log("Form submitted:", form);
 
-            setTimeout(() => setIsSubmitting(false), 1000);
+            const successHandler = (res) => {
+                console.log("GAS response:", res);
+
+                if (res.status === "error") {
+                    setForm({ age: "", username: "", email: "", gender: "", userType: "", zipcode: "" }); // reset form
+                    setAlert(onFailure(res.message, () => setAlert(null)));
+                    setIsSubmitting(false);
+                } else {
+                    setForm({ age: "", username: "", email: "", gender: "", userType: "", zipcode: "" }); // reset form
+                    setAlert(onSuccess(res.message, () => setAlert(null)));
+                    setIsSubmitting(false);
+                }
+            };
+
+            submitUserForm(form, successHandler);
         }
     };
+
 
     return (
 
@@ -74,14 +83,24 @@ export default function FormExample() {
                 Fill Test Data 🤪
             </Button>
 
-            <FormInput
-                label="Date of Birth"
-                type="date"
-                name="dob"
-                value={form.dob}
-                onChange={handleChange}
-                error={errors.dob}
-            />
+            <Form.Group className="mb-3" controlId="age">
+                <Form.Label>Age range</Form.Label>
+                <Form.Select
+                    name="age"
+                    value={form.age}
+                    onChange={handleChange}
+                    isInvalid={!!errors.age}
+                >
+                    <option value="">Select an Age Range</option>
+                    <option value="18-24">18-24</option>
+                    <option value="25-34">25-34</option>
+                    <option value="35-44">35-44</option>
+                    <option value="45-54">45-54</option>
+                    <option value="55-64">55-64</option>
+                    <option value="65+">65+</option>
+                </Form.Select>
+                {errors.age && <Form.Control.Feedback type="invalid">{errors.age}</Form.Control.Feedback>}
+            </Form.Group>
 
             <FormInput
                 label="Username"
@@ -90,6 +109,15 @@ export default function FormExample() {
                 onChange={handleChange}
                 placeholder="Enter your username"
                 error={errors.username}
+            />
+
+            <FormInput
+                label="Zipcode"
+                name="zipcode"
+                value={form.zipcode}
+                onChange={handleChange}
+                placeholder="Enter your zipcode"
+                error={errors.zipcode}
             />
 
             <FormInput
@@ -131,6 +159,8 @@ export default function FormExample() {
                 </Form.Select>
                 {errors.userType && <Form.Control.Feedback type="invalid">{errors.gender}</Form.Control.Feedback>}
             </Form.Group>
+            {alert && <AlertMessage {...alert} />}
+
 
             <Button type="submit" isLoading={isSubmitting}>
                 Submit

@@ -11,27 +11,77 @@ function doGet(e) {
         .addMetaTag("viewport", "width=device-width, initial-scale=1");
 }
 
-
-function addUser(user) {
+function getAllUsers() {
     try {
         const sheet = getSsSheet("Users");
         if (!sheet) throw new Error('Sheet "Users" not found.');
 
-        // Append user data in the correct order
-        sheet.appendRow([
-            new Date(),       // Timestamp
-            user.username || "",
-            user.email || "",
-            user.dob || "",
-            user.gender || "",
-            user.userType || "",
-        ]);
+        const data = sheet.getDataRange().getValues(); // includes headers
+        if (data.length <= 1) return []; // no data rows
 
-        return { status: "success", message: "User added successfully!" };
+        const headers = data[0]; // first row is headers
+        const rows = data.slice(1); // all remaining rows
+        Logger.log(rows)
+        // Map each row to an object
+
+        return JSON.stringify(rows); // array of objects
     } catch (err) {
-        throw new Error("Failed to add user: " + err.message);
+        throw new Error("Failed to fetch users: " + err.message);
     }
 }
+
+
+
+function addUser(user) {
+    const sheet = getSsSheet("Users");
+    if (!sheet) return { status: "error", message: 'Sheet "Users" not found.' };
+
+    const emailCol = 4;
+    const usernameCol = 3;
+    const lastRow = sheet.getLastRow();
+
+    const normalize = (str = "") => str.toString().trim().toLowerCase();
+
+    if (lastRow > 1) {
+        const existingEmails = sheet.getRange(2, emailCol, lastRow - 1, 1)
+            .getValues().flat().map(normalize);
+        const existingUsernames = sheet.getRange(2, usernameCol, lastRow - 1, 1)
+            .getValues().flat().map(normalize);
+
+        const email = normalize(user.email);
+        const username = normalize(user.username);
+
+        if (existingEmails.includes(email)) {
+            return { status: "error", message: "A user with that email already exists." };
+        }
+        if (existingUsernames.includes(username)) {
+            return { status: "error", message: "A user with that username already exists." };
+        }
+    }
+
+    if (!user.username || !user.email) {
+        return { status: "error", message: "Username and email are required." };
+    }
+
+    const userId = generateEmployeeId();
+    sheet.appendRow([
+        userId,
+        new Date(),
+        user.username || "",
+        user.email || "",
+        user.age || "",
+        user.gender || "",
+        user.userType || "",
+        user.zipcode || "",
+    ]);
+
+    return { status: "success", message: "User added successfully!", userId };
+}
+
+
+
+
+
 /**
  * Formats a Date object into MM/DD/YYYY at hh:mm AM/PM
  *
@@ -81,28 +131,22 @@ function serverSideGetData(name, row, col, numCols) {
     return dataNew;
 }
 
-/**
- * Fetch all users from the "Users" sheet
- */
-function getAllUsers() {
-    try {
-        const ss = getSsSheet("Users")
-        if (!sheet) throw new Error('Sheet "Users" not found.');
+function generateEmployeeId() {
+    const props = PropertiesService.getScriptProperties();
 
-        const data = sheet.getDataRange().getValues(); // includes headers
-        const headers = data.shift(); // remove headers row
+    // Retrieve last issued employee number, default to 0 if not set
+    let lastNum = Number(props.getProperty("lastEmployeeNum")) || 0;
+    lastNum++;
 
-        // Map each row to an object
-        const users = data.map((row) => {
-            const obj = {};
-            headers.forEach((header, i) => {
-                obj[header] = row[i];
-            });
-            return obj;
-        });
+    // Store the updated number back
+    props.setProperty("lastEmployeeNum", String(lastNum));
 
-        return users; // array of objects
-    } catch (err) {
-        throw new Error("Failed to fetch users: " + err.message);
-    }
+    const now = new Date();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const year = now.getFullYear().toString().slice(-2);
+
+    // Format: MMDDYY### (### is sequential padded ID)
+    return `${month}${day}${year}${String(lastNum).padStart(3, '0')}`;
 }
+

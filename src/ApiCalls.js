@@ -2,10 +2,9 @@
 
 
 // Submit new user form data to Apps Script
-export function submitUserForm(formData, onSuccess, onError) {
+export function submitUserForm(formData, onSuccess) {
     google.script.run
         .withSuccessHandler(onSuccess)
-        .withFailureHandler(onError)
         .addUser(formData); // `addUser` is the server-side Apps Script function
 }
 
