@@ -25066,6 +25066,7 @@ function FormExample() {
     const [form, setForm] = (0, _react.useState)({
         age: "",
         username: "",
+        password: "",
         email: "",
         gender: "",
         userType: "",
@@ -25141,7 +25142,7 @@ function FormExample() {
                 children: "My Cool Form"
             }, void 0, false, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 81,
+                lineNumber: 82,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -25153,7 +25154,7 @@ function FormExample() {
                 children: "Fill Test Data \uD83E\uDD2A"
             }, void 0, false, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 82,
+                lineNumber: 83,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -25164,7 +25165,7 @@ function FormExample() {
                         children: "Age range"
                     }, void 0, false, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 87,
+                        lineNumber: 88,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Select, {
@@ -25178,7 +25179,7 @@ function FormExample() {
                                 children: "Select an Age Range"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 94,
+                                lineNumber: 95,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25186,7 +25187,7 @@ function FormExample() {
                                 children: "18-24"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 95,
+                                lineNumber: 96,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25194,7 +25195,7 @@ function FormExample() {
                                 children: "25-34"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 96,
+                                lineNumber: 97,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25202,7 +25203,7 @@ function FormExample() {
                                 children: "35-44"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 97,
+                                lineNumber: 98,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25210,7 +25211,7 @@ function FormExample() {
                                 children: "45-54"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 98,
+                                lineNumber: 99,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25218,7 +25219,7 @@ function FormExample() {
                                 children: "55-64"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 99,
+                                lineNumber: 100,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25226,13 +25227,13 @@ function FormExample() {
                                 children: "65+"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 100,
+                                lineNumber: 101,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 88,
+                        lineNumber: 89,
                         columnNumber: 17
                     }, this),
                     errors.age && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control.Feedback, {
@@ -25240,13 +25241,13 @@ function FormExample() {
                         children: errors.age
                     }, void 0, false, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 102,
+                        lineNumber: 103,
                         columnNumber: 32
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 86,
+                lineNumber: 87,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formInputDefault.default), {
@@ -25258,7 +25259,19 @@ function FormExample() {
                 error: errors.username
             }, void 0, false, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 105,
+                lineNumber: 106,
+                columnNumber: 13
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                type: "password",
+                name: "password",
+                placeholder: "Password",
+                value: formData.password,
+                onChange: handleChange,
+                required: true
+            }, void 0, false, {
+                fileName: "src/Components/NewUserForm.js",
+                lineNumber: 116,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formInputDefault.default), {
@@ -25270,7 +25283,7 @@ function FormExample() {
                 error: errors.zipcode
             }, void 0, false, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 114,
+                lineNumber: 125,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _formInputDefault.default), {
@@ -25283,7 +25296,7 @@ function FormExample() {
                 error: errors.email
             }, void 0, false, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 123,
+                lineNumber: 134,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -25294,7 +25307,7 @@ function FormExample() {
                         children: "Gender"
                     }, void 0, false, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 134,
+                        lineNumber: 145,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Select, {
@@ -25308,7 +25321,7 @@ function FormExample() {
                                 children: "Select gender"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 141,
+                                lineNumber: 152,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25316,7 +25329,7 @@ function FormExample() {
                                 children: "Male"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 142,
+                                lineNumber: 153,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25324,13 +25337,13 @@ function FormExample() {
                                 children: "Female"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 143,
+                                lineNumber: 154,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 135,
+                        lineNumber: 146,
                         columnNumber: 17
                     }, this),
                     errors.gender && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control.Feedback, {
@@ -25338,13 +25351,13 @@ function FormExample() {
                         children: errors.gender
                     }, void 0, false, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 145,
+                        lineNumber: 156,
                         columnNumber: 35
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 133,
+                lineNumber: 144,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Group, {
@@ -25355,7 +25368,7 @@ function FormExample() {
                         children: "User Type"
                     }, void 0, false, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 149,
+                        lineNumber: 160,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Select, {
@@ -25369,7 +25382,7 @@ function FormExample() {
                                 children: "Select a User Type"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 156,
+                                lineNumber: 167,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25377,7 +25390,7 @@ function FormExample() {
                                 children: "Host"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 157,
+                                lineNumber: 168,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("option", {
@@ -25385,13 +25398,13 @@ function FormExample() {
                                 children: "Participant"
                             }, void 0, false, {
                                 fileName: "src/Components/NewUserForm.js",
-                                lineNumber: 158,
+                                lineNumber: 169,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 150,
+                        lineNumber: 161,
                         columnNumber: 17
                     }, this),
                     errors.userType && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Form).Control.Feedback, {
@@ -25399,20 +25412,20 @@ function FormExample() {
                         children: errors.gender
                     }, void 0, false, {
                         fileName: "src/Components/NewUserForm.js",
-                        lineNumber: 160,
+                        lineNumber: 171,
                         columnNumber: 37
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 148,
+                lineNumber: 159,
                 columnNumber: 13
             }, this),
             alert && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _alertDefault.default), {
                 ...alert
             }, void 0, false, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 162,
+                lineNumber: 173,
                 columnNumber: 23
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _buttonDefault.default), {
@@ -25421,17 +25434,17 @@ function FormExample() {
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/Components/NewUserForm.js",
-                lineNumber: 165,
+                lineNumber: 176,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "src/Components/NewUserForm.js",
-        lineNumber: 80,
+        lineNumber: 81,
         columnNumber: 9
     }, this);
 }
-_s(FormExample, "NtCPAGy8wOyG8Z/+bf9PWKzCkRQ=");
+_s(FormExample, "M7hgOFaoOg7jRm7cjK0NJseyGfg=");
 _c = FormExample;
 var _c;
 $RefreshReg$(_c, "FormExample");

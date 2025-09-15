@@ -1,18 +1,39 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import NewUserForm from "./Components/NewUserForm";
+import PublicLandingPage from "../Components/PublicLandingPage";
+import NewUserForm from "../Components/NewUserForm";
+import HomePage from "./Components/Home";
 import AdminDashboard from "./Components/AdminDashboard";
+import { AuthProvider, useAuth } from "./Context/AuthContext";
 
-export default function App() {
+function AppRoutes() {
+    const { user } = useAuth();
+
     return (
-        <Router>
-            <NavBar />
-            <Routes>
-                <Route path="/" element={<NewUserForm />} />
-                <Route path="/admin" element={<AdminDashboard />} />
-            </Routes>
-        </Router>
+        <Routes>
+            {!user ? (
+                <>
+                    <Route path="/" element={<PublicLandingPage />} />
+                    <Route path="/new-user" element={<NewUserForm />} />
+                </>
+            ) : (
+                <>
+                    <Route path="/" element={<HomePage />} />
+                    {user.isAdmin && <Route path="/admin" element={<AdminDashboard />} />}
+                </>
+            )}
+        </Routes>
     );
 }
 
+export default function App() {
+    return (
+        <AuthProvider>
+            <Router>
+                <NavBar />
+                <AppRoutes />
+            </Router>
+        </AuthProvider>
+    );
+}

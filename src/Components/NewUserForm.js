@@ -8,10 +8,11 @@ import AlertMessage from "../UI/Alert";
 import { onFailure, onSuccess } from "../Utilities/AlertHelpers";
 
 // <Heading level="1" children="My Cool Form" />
-export default function FormExample() {
+export default function NewUserForm() {
     const [form, setForm] = useState({
         age: "",
         username: "",
+        password: "",
         email: "",
         gender: "",
         userType: "",
@@ -109,6 +110,16 @@ export default function FormExample() {
                 onChange={handleChange}
                 placeholder="Enter your username"
                 error={errors.username}
+            />
+
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
             />
 
             <FormInput

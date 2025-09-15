@@ -11,6 +11,22 @@ function doGet(e) {
         .addMetaTag("viewport", "width=device-width, initial-scale=1");
 }
 
+function doPost(e) {
+    try {
+        const user = JSON.parse(e.postData.contents); // expects JSON from React
+        const result = addUser(user); // call your existing helper
+
+        return ContentService
+            .createTextOutput(JSON.stringify(result))
+            .setMimeType(ContentService.MimeType.JSON);
+    } catch (err) {
+        return ContentService
+            .createTextOutput(JSON.stringify({ status: "error", message: err.message }))
+            .setMimeType(ContentService.MimeType.JSON);
+    }
+}
+
+
 function getAllUsers() {
     try {
         const sheet = getSsSheet("Users");
@@ -59,7 +75,7 @@ function addUser(user) {
         }
     }
 
-    if (!user.username || !user.email) {
+    if (!user.username || !user.email || !user.password) {
         return { status: "error", message: "Username and email are required." };
     }
 
@@ -68,6 +84,7 @@ function addUser(user) {
         userId,
         new Date(),
         user.username || "",
+        user.password || "",
         user.email || "",
         user.age || "",
         user.gender || "",
